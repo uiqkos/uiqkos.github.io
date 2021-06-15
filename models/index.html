@@ -34,16 +34,13 @@
                         <!-- Main navigation -->
                         <ul class="nav navbar-nav">
                             <li class="navitem">
-                                <a href=".." class="nav-link">Home</a>
+                                <a href=".." class="nav-link">Главная</a>
                             </li>
                             <li class="navitem">
                                 <a href="../datamodel/" class="nav-link">Модель данных</a>
                             </li>
                             <li class="navitem active">
                                 <a href="./" class="nav-link">Сущности</a>
-                            </li>
-                            <li class="navitem">
-                                <a href="../about/" class="nav-link">About</a>
                             </li>
                         </ul>
 
@@ -59,7 +56,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a rel="next" href="../about/" class="nav-link">
+                                <a rel="next" class="nav-link disabled">
                                     Next <i class="fa fa-arrow-right"></i>
                                 </a>
                             </li>
@@ -81,13 +78,57 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
         <ul class="nav flex-column">
             
+            <li class="nav-item" data-level="1"><a href="#models" class="nav-link">Models</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#building" class="nav-link">Building</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#department" class="nav-link">Department</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#worker" class="nav-link">Worker</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#management" class="nav-link">Management</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#hall" class="nav-link">Hall</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#responsibility" class="nav-link">Responsibility</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#property" class="nav-link">Property</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#unit" class="nav-link">Unit</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#consist" class="nav-link">Consist</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#revaluation" class="nav-link">Revaluation</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
         </ul>
     </div>
 </div></div>
                     <div class="col-md-9" role="main">
 
-<h3 id="models">Models</h3>
-<h4 id="building">Building</h4>
+<h1 id="models">Models</h1>
+<h2 id="building">Building</h2>
 <blockquote>
 <p>Здание университета</p>
 </blockquote>
@@ -98,7 +139,7 @@
 <li><strong>delete</strong> <code>building/&lt;int:pk&gt;/delete</code> -- Удалить объект с id = pk</li>
 <li><strong>update</strong> <code>building/&lt;int:pk&gt;/update</code> -- Обновление данных объекта с id = pk</li>
 </ul>
-<h4 id="department">Department</h4>
+<h2 id="department">Department</h2>
 <blockquote>
 <p>Подразделение университета (деканат, кафедра, вычислительный центр)</p>
 </blockquote>
@@ -109,7 +150,7 @@
 <li><strong>delete</strong> <code>department/&lt;int:pk&gt;/delete</code> -- Удалить объект с id = pk</li>
 <li><strong>update</strong> <code>department/&lt;int:pk&gt;/update</code> -- Обновление данных объекта с id = pk</li>
 </ul>
-<h4 id="worker">Worker</h4>
+<h2 id="worker">Worker</h2>
 <blockquote>
 <p>Работник университета. Может руководить подразделением или нести ответственность за аудиторию </p>
 </blockquote>
@@ -120,7 +161,7 @@
 <li><strong>delete</strong> <code>worker/&lt;int:pk&gt;/delete</code> -- Удалить объект с id = pk</li>
 <li><strong>update</strong> <code>worker/&lt;int:pk&gt;/update</code> -- Обновление данных объекта с id = pk</li>
 </ul>
-<h4 id="management">Management</h4>
+<h2 id="management">Management</h2>
 <blockquote>
 <p>Управление выражавет зависимость между работником и подразделением</p>
 </blockquote>
@@ -131,7 +172,7 @@
 <li><strong>delete</strong> <code>management/&lt;int:pk&gt;/delete</code> -- Удалить объект с id = pk</li>
 <li><strong>update</strong> <code>management/&lt;int:pk&gt;/update</code> -- Обновление данных объекта с id = pk</li>
 </ul>
-<h4 id="hall">Hall</h4>
+<h2 id="hall">Hall</h2>
 <blockquote>
 <p>Аудитория закреплена за подразделением. Может быть компьютерным классом, актовым залом или лекционной аудитоией</p>
 </blockquote>
@@ -142,7 +183,7 @@
 <li><strong>delete</strong> <code>hall/&lt;int:pk&gt;/delete</code> -- Удалить объект с id = pk</li>
 <li><strong>update</strong> <code>hall/&lt;int:pk&gt;/update</code> -- Обновление данных объекта с id = pk</li>
 </ul>
-<h4 id="responsibility">Responsibility</h4>
+<h2 id="responsibility">Responsibility</h2>
 <blockquote>
 <p>Ответственность работника за аудиторией</p>
 </blockquote>
@@ -153,7 +194,7 @@
 <li><strong>delete</strong> <code>responsibility/&lt;int:pk&gt;/delete</code> -- Удалить объект с id = pk</li>
 <li><strong>update</strong> <code>responsibility/&lt;int:pk&gt;/update</code> -- Обновление данных объекта с id = pk</li>
 </ul>
-<h4 id="property">Property</h4>
+<h2 id="property">Property</h2>
 <blockquote>
 <p>Словарь, содержащий список стандартных кодов</p>
 </blockquote>
@@ -164,7 +205,7 @@
 <li><strong>delete</strong> <code>property/&lt;int:pk&gt;/delete</code> -- Удалить объект с id = pk</li>
 <li><strong>update</strong> <code>property/&lt;int:pk&gt;/update</code> -- Обновление данных объекта с id = pk</li>
 </ul>
-<h4 id="unit">Unit</h4>
+<h2 id="unit">Unit</h2>
 <blockquote>
 <p>Единица имущества закреплена за аудиторией посредством сущности Consist</p>
 </blockquote>
@@ -175,7 +216,7 @@
 <li><strong>delete</strong> <code>unit/&lt;int:pk&gt;/delete</code> -- Удалить объект с id = pk</li>
 <li><strong>update</strong> <code>unit/&lt;int:pk&gt;/update</code> -- Обновление данных объекта с id = pk</li>
 </ul>
-<h4 id="consist">Consist</h4>
+<h2 id="consist">Consist</h2>
 <blockquote>
 <p>Содержание связывает аудиторию и единицу имущества </p>
 </blockquote>
@@ -186,7 +227,7 @@
 <li><strong>delete</strong> <code>consist/&lt;int:pk&gt;/delete</code> -- Удалить объект с id = pk</li>
 <li><strong>update</strong> <code>consist/&lt;int:pk&gt;/update</code> -- Обновление данных объекта с id = pk</li>
 </ul>
-<h4 id="revaluation">Revaluation</h4>
+<h2 id="revaluation">Revaluation</h2>
 <blockquote>
 <p>Переоценка </p>
 </blockquote>
