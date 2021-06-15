@@ -133,110 +133,110 @@
 <p>Здание университета</p>
 </blockquote>
 <ul>
-<li><strong>list</strong> <code>building/list</code> -- Список всех объектов</li>
-<li><strong>detail</strong> <code>building/&lt;int:pk&gt;</code> -- Подробности об объекте с id = pk</li>
-<li><strong>create</strong> <code>building/create</code> -- Создать объект</li>
-<li><strong>delete</strong> <code>building/&lt;int:pk&gt;/delete</code> -- Удалить объект с id = pk</li>
-<li><strong>update</strong> <code>building/&lt;int:pk&gt;/update</code> -- Обновление данных объекта с id = pk</li>
+<li><strong>list</strong> <code>GET</code> <code>building/list</code> -- Список всех объектов</li>
+<li><strong>detail</strong> <code>GET</code> <code>building/&lt;int:pk&gt;</code> -- Подробности об объекте с id = pk</li>
+<li><strong>create</strong> <code>POST</code> <code>building/create</code> -- Создать объект</li>
+<li><strong>delete</strong> <code>DELETE</code> <code>building/&lt;int:pk&gt;/delete</code> -- Удалить объект с id = pk</li>
+<li><strong>update</strong> <code>PATCH</code> <code>building/&lt;int:pk&gt;/update</code> -- Обновление данных объекта с id = pk</li>
 </ul>
 <h2 id="department">Department</h2>
 <blockquote>
 <p>Подразделение университета (деканат, кафедра, вычислительный центр)</p>
 </blockquote>
 <ul>
-<li><strong>list</strong> <code>department/list</code> -- Список всех объектов</li>
-<li><strong>detail</strong> <code>department/&lt;int:pk&gt;</code> -- Подробности об объекте с id = pk</li>
-<li><strong>create</strong> <code>department/create</code> -- Создать объект</li>
-<li><strong>delete</strong> <code>department/&lt;int:pk&gt;/delete</code> -- Удалить объект с id = pk</li>
-<li><strong>update</strong> <code>department/&lt;int:pk&gt;/update</code> -- Обновление данных объекта с id = pk</li>
+<li><strong>list</strong> <code>GET</code> <code>department/list</code> -- Список всех объектов</li>
+<li><strong>detail</strong> <code>GET</code> <code>department/&lt;int:pk&gt;</code> -- Подробности об объекте с id = pk</li>
+<li><strong>create</strong> <code>POST</code> <code>department/create</code> -- Создать объект</li>
+<li><strong>delete</strong> <code>DELETE</code> <code>department/&lt;int:pk&gt;/delete</code> -- Удалить объект с id = pk</li>
+<li><strong>update</strong> <code>PATCH</code> <code>department/&lt;int:pk&gt;/update</code> -- Обновление данных объекта с id = pk</li>
 </ul>
 <h2 id="worker">Worker</h2>
 <blockquote>
 <p>Работник университета. Может руководить подразделением или нести ответственность за аудиторию </p>
 </blockquote>
 <ul>
-<li><strong>list</strong> <code>worker/list</code> -- Список всех объектов</li>
-<li><strong>detail</strong> <code>worker/&lt;int:pk&gt;</code> -- Подробности об объекте с id = pk</li>
-<li><strong>create</strong> <code>worker/create</code> -- Создать объект</li>
-<li><strong>delete</strong> <code>worker/&lt;int:pk&gt;/delete</code> -- Удалить объект с id = pk</li>
-<li><strong>update</strong> <code>worker/&lt;int:pk&gt;/update</code> -- Обновление данных объекта с id = pk</li>
+<li><strong>list</strong> <code>GET</code> <code>worker/list</code> -- Список всех объектов</li>
+<li><strong>detail</strong> <code>GET</code> <code>worker/&lt;int:pk&gt;</code> -- Подробности об объекте с id = pk</li>
+<li><strong>create</strong> <code>POST</code> <code>worker/create</code> -- Создать объект</li>
+<li><strong>delete</strong> <code>DELETE</code> <code>worker/&lt;int:pk&gt;/delete</code> -- Удалить объект с id = pk</li>
+<li><strong>update</strong> <code>PATCH</code> <code>worker/&lt;int:pk&gt;/update</code> -- Обновление данных объекта с id = pk</li>
 </ul>
 <h2 id="management">Management</h2>
 <blockquote>
 <p>Управление выражавет зависимость между работником и подразделением</p>
 </blockquote>
 <ul>
-<li><strong>list</strong> <code>management/list</code> -- Список всех объектов</li>
-<li><strong>detail</strong> <code>management/&lt;int:pk&gt;</code> -- Подробности об объекте с id = pk</li>
-<li><strong>create</strong> <code>management/create</code> -- Создать объект</li>
-<li><strong>delete</strong> <code>management/&lt;int:pk&gt;/delete</code> -- Удалить объект с id = pk</li>
-<li><strong>update</strong> <code>management/&lt;int:pk&gt;/update</code> -- Обновление данных объекта с id = pk</li>
+<li><strong>list</strong> <code>GET</code> <code>management/list</code> -- Список всех объектов</li>
+<li><strong>detail</strong> <code>GET</code> <code>management/&lt;int:pk&gt;</code> -- Подробности об объекте с id = pk</li>
+<li><strong>create</strong> <code>POST</code> <code>management/create</code> -- Создать объект</li>
+<li><strong>delete</strong> <code>DELETE</code> <code>management/&lt;int:pk&gt;/delete</code> -- Удалить объект с id = pk</li>
+<li><strong>update</strong> <code>PATCH</code> <code>management/&lt;int:pk&gt;/update</code> -- Обновление данных объекта с id = pk</li>
 </ul>
 <h2 id="hall">Hall</h2>
 <blockquote>
 <p>Аудитория закреплена за подразделением. Может быть компьютерным классом, актовым залом или лекционной аудитоией</p>
 </blockquote>
 <ul>
-<li><strong>list</strong> <code>hall/list</code> -- Список всех объектов</li>
-<li><strong>detail</strong> <code>hall/&lt;int:pk&gt;</code> -- Подробности об объекте с id = pk</li>
-<li><strong>create</strong> <code>hall/create</code> -- Создать объект</li>
-<li><strong>delete</strong> <code>hall/&lt;int:pk&gt;/delete</code> -- Удалить объект с id = pk</li>
-<li><strong>update</strong> <code>hall/&lt;int:pk&gt;/update</code> -- Обновление данных объекта с id = pk</li>
+<li><strong>list</strong> <code>GET</code> <code>hall/list</code> -- Список всех объектов</li>
+<li><strong>detail</strong> <code>GET</code> <code>hall/&lt;int:pk&gt;</code> -- Подробности об объекте с id = pk</li>
+<li><strong>create</strong> <code>POST</code> <code>hall/create</code> -- Создать объект</li>
+<li><strong>delete</strong> <code>DELETE</code> <code>hall/&lt;int:pk&gt;/delete</code> -- Удалить объект с id = pk</li>
+<li><strong>update</strong> <code>PATCH</code> <code>hall/&lt;int:pk&gt;/update</code> -- Обновление данных объекта с id = pk</li>
 </ul>
 <h2 id="responsibility">Responsibility</h2>
 <blockquote>
 <p>Ответственность работника за аудиторией</p>
 </blockquote>
 <ul>
-<li><strong>list</strong> <code>responsibility/list</code> -- Список всех объектов</li>
-<li><strong>detail</strong> <code>responsibility/&lt;int:pk&gt;</code> -- Подробности об объекте с id = pk</li>
-<li><strong>create</strong> <code>responsibility/create</code> -- Создать объект</li>
-<li><strong>delete</strong> <code>responsibility/&lt;int:pk&gt;/delete</code> -- Удалить объект с id = pk</li>
-<li><strong>update</strong> <code>responsibility/&lt;int:pk&gt;/update</code> -- Обновление данных объекта с id = pk</li>
+<li><strong>list</strong> <code>GET</code> <code>responsibility/list</code> -- Список всех объектов</li>
+<li><strong>detail</strong> <code>GET</code> <code>responsibility/&lt;int:pk&gt;</code> -- Подробности об объекте с id = pk</li>
+<li><strong>create</strong> <code>POST</code> <code>responsibility/create</code> -- Создать объект</li>
+<li><strong>delete</strong> <code>DELETE</code> <code>responsibility/&lt;int:pk&gt;/delete</code> -- Удалить объект с id = pk</li>
+<li><strong>update</strong> <code>PATCH</code> <code>responsibility/&lt;int:pk&gt;/update</code> -- Обновление данных объекта с id = pk</li>
 </ul>
 <h2 id="property">Property</h2>
 <blockquote>
 <p>Словарь, содержащий список стандартных кодов</p>
 </blockquote>
 <ul>
-<li><strong>list</strong> <code>property/list</code> -- Список всех объектов</li>
-<li><strong>detail</strong> <code>property/&lt;int:pk&gt;</code> -- Подробности об объекте с id = pk</li>
-<li><strong>create</strong> <code>property/create</code> -- Создать объект</li>
-<li><strong>delete</strong> <code>property/&lt;int:pk&gt;/delete</code> -- Удалить объект с id = pk</li>
-<li><strong>update</strong> <code>property/&lt;int:pk&gt;/update</code> -- Обновление данных объекта с id = pk</li>
+<li><strong>list</strong> <code>GET</code> <code>property/list</code> -- Список всех объектов</li>
+<li><strong>detail</strong> <code>GET</code> <code>property/&lt;int:pk&gt;</code> -- Подробности об объекте с id = pk</li>
+<li><strong>create</strong> <code>POST</code> <code>property/create</code> -- Создать объект</li>
+<li><strong>delete</strong> <code>DELETE</code> <code>property/&lt;int:pk&gt;/delete</code> -- Удалить объект с id = pk</li>
+<li><strong>update</strong> <code>PATCH</code> <code>property/&lt;int:pk&gt;/update</code> -- Обновление данных объекта с id = pk</li>
 </ul>
 <h2 id="unit">Unit</h2>
 <blockquote>
 <p>Единица имущества закреплена за аудиторией посредством сущности Consist</p>
 </blockquote>
 <ul>
-<li><strong>list</strong> <code>unit/list</code> -- Список всех объектов</li>
-<li><strong>detail</strong> <code>unit/&lt;int:pk&gt;</code> -- Подробности об объекте с id = pk</li>
-<li><strong>create</strong> <code>unit/create</code> -- Создать объект</li>
-<li><strong>delete</strong> <code>unit/&lt;int:pk&gt;/delete</code> -- Удалить объект с id = pk</li>
-<li><strong>update</strong> <code>unit/&lt;int:pk&gt;/update</code> -- Обновление данных объекта с id = pk</li>
+<li><strong>list</strong> <code>GET</code> <code>unit/list</code> -- Список всех объектов</li>
+<li><strong>detail</strong> <code>GET</code> <code>unit/&lt;int:pk&gt;</code> -- Подробности об объекте с id = pk</li>
+<li><strong>create</strong> <code>POST</code> <code>unit/create</code> -- Создать объект</li>
+<li><strong>delete</strong> <code>DELETE</code> <code>unit/&lt;int:pk&gt;/delete</code> -- Удалить объект с id = pk</li>
+<li><strong>update</strong> <code>PATCH</code> <code>unit/&lt;int:pk&gt;/update</code> -- Обновление данных объекта с id = pk</li>
 </ul>
 <h2 id="consist">Consist</h2>
 <blockquote>
 <p>Содержание связывает аудиторию и единицу имущества </p>
 </blockquote>
 <ul>
-<li><strong>list</strong> <code>consist/list</code> -- Список всех объектов</li>
-<li><strong>detail</strong> <code>consist/&lt;int:pk&gt;</code> -- Подробности об объекте с id = pk</li>
-<li><strong>create</strong> <code>consist/create</code> -- Создать объект</li>
-<li><strong>delete</strong> <code>consist/&lt;int:pk&gt;/delete</code> -- Удалить объект с id = pk</li>
-<li><strong>update</strong> <code>consist/&lt;int:pk&gt;/update</code> -- Обновление данных объекта с id = pk</li>
+<li><strong>list</strong> <code>GET</code> <code>consist/list</code> -- Список всех объектов</li>
+<li><strong>detail</strong> <code>GET</code> <code>consist/&lt;int:pk&gt;</code> -- Подробности об объекте с id = pk</li>
+<li><strong>create</strong> <code>POST</code> <code>consist/create</code> -- Создать объект</li>
+<li><strong>delete</strong> <code>DELETE</code> <code>consist/&lt;int:pk&gt;/delete</code> -- Удалить объект с id = pk</li>
+<li><strong>update</strong> <code>PATCH</code> <code>consist/&lt;int:pk&gt;/update</code> -- Обновление данных объекта с id = pk</li>
 </ul>
 <h2 id="revaluation">Revaluation</h2>
 <blockquote>
 <p>Переоценка </p>
 </blockquote>
 <ul>
-<li><strong>list</strong> <code>revaluation/list</code> -- Список всех объектов</li>
-<li><strong>detail</strong> <code>revaluation/&lt;int:pk&gt;</code> -- Подробности об объекте с id = pk</li>
-<li><strong>create</strong> <code>revaluation/create</code> -- Создать объект</li>
-<li><strong>delete</strong> <code>revaluation/&lt;int:pk&gt;/delete</code> -- Удалить объект с id = pk</li>
-<li><strong>update</strong> <code>revaluation/&lt;int:pk&gt;/update</code> -- Обновление данных объекта с id = pk</li>
+<li><strong>list</strong> <code>GET</code> <code>revaluation/list</code> -- Список всех объектов</li>
+<li><strong>detail</strong> <code>GET</code> <code>revaluation/&lt;int:pk&gt;</code> -- Подробности об объекте с id = pk</li>
+<li><strong>create</strong> <code>POST</code> <code>revaluation/create</code> -- Создать объект</li>
+<li><strong>delete</strong> <code>DELETE</code> <code>revaluation/&lt;int:pk&gt;/delete</code> -- Удалить объект с id = pk</li>
+<li><strong>update</strong> <code>PATCH</code> <code>revaluation/&lt;int:pk&gt;/update</code> -- Обновление данных объекта с id = pk</li>
 </ul></div>
             </div>
         </div>
