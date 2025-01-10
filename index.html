@@ -107,6 +107,10 @@
             <input type="number" id="max-iterations" value="100" min="1">
         </div>
         <div class="input-group">
+            <label for="animation-duration">Длительность анимации (сек):</label>
+            <input type="number" id="animation-duration" value="2" min="0.1" step="0.1">
+        </div>
+        <div class="input-group">
             <button onclick="startGradientDescent()">Запустить</button>
             <button onclick="resetParameters()" class="reset-button">Сбросить параметры</button>
         </div>
@@ -247,34 +251,63 @@
             const xMax = parseFloat(document.getElementById('x-max').value);
             const yMin = parseFloat(document.getElementById('y-min').value);
             const yMax = parseFloat(document.getElementById('y-max').value);
+            const animationDuration = parseFloat(document.getElementById('animation-duration').value);
+
+            if (animationDuration <= 0) {
+                alert('Длительность анимации должна быть больше 0');
+                document.getElementById('animation-duration').value = '2';
+                return;
+            }
 
             const xScale = canvas.width / (xMax - xMin);
             const yScale = canvas.height / (yMax - yMin);
 
-            ctx.beginPath();
-            ctx.strokeStyle = 'red';
+            let currentPointIndex = 0;
+            const delayBetweenPoints = (animationDuration * 1000) / path.length;
 
-            for (let i = 0; i < path.length; i++) {
-                const x = path[i];
+            function drawNextPoint() {
+                if (currentPointIndex >= path.length) return;
+
+                const x = path[currentPointIndex];
                 const y = f(x);
                 const px = (x - xMin) * xScale;
                 const py = canvas.height - ((y - yMin) * yScale);
 
-                if (i === 0) {
-                    ctx.moveTo(px, py);
-                } else {
+                if (currentPointIndex > 0) {
+                    const prevX = path[currentPointIndex - 1];
+                    const prevY = f(prevX);
+                    const prevPx = (prevX - xMin) * xScale;
+                    const prevPy = canvas.height - ((prevY - yMin) * yScale);
+
+                    ctx.beginPath();
+                    ctx.strokeStyle = 'red';
+                    ctx.moveTo(prevPx, prevPy);
                     ctx.lineTo(px, py);
+                    ctx.stroke();
                 }
 
                 ctx.fillStyle = 'red';
                 ctx.beginPath();
                 ctx.arc(px, py, 3, 0, 2 * Math.PI);
                 ctx.fill();
+
+                currentPointIndex++;
+                if (currentPointIndex < path.length) {
+                    setTimeout(drawNextPoint, delayBetweenPoints);
+                }
             }
-            ctx.stroke();
+
+            drawNextPoint();
         }
 
         function startGradientDescent() {
+            const animationDuration = parseFloat(document.getElementById('animation-duration').value);
+            if (animationDuration <= 0) {
+                alert('Длительность анимации должна быть больше 0');
+                document.getElementById('animation-duration').value = '2';
+                return;
+            }
+
             const funcStr = document.getElementById('function').value;
             const learningRate = parseFloat(document.getElementById('learning-rate').value);
             const startX = parseFloat(document.getElementById('start-x').value);
@@ -339,6 +372,7 @@
             document.getElementById('max-iterations').value = '100';
             document.getElementById('stop-criterion').value = 'points';
             document.getElementById('result').innerHTML = '';
+            document.getElementById('animation-duration').value = '2';
 
             const funcStr = document.getElementById('function').value;
             if (funcStr) {
@@ -361,6 +395,14 @@
             if (learningRate <= 0) {
                 alert('Скорость обучения должна быть больше 0');
                 this.value = '0.1';
+            }
+        });
+
+        document.getElementById('animation-duration').addEventListener('change', function() {
+            const duration = parseFloat(this.value);
+            if (duration <= 0) {
+                alert('Длительность анимации должна быть больше 0');
+                this.value = '2';
             }
         });
     </script>
