@@ -279,24 +279,52 @@
             const learningRate = parseFloat(document.getElementById('learning-rate').value);
             const startX = parseFloat(document.getElementById('start-x').value);
 
-            const f = parse(funcStr);
-            const df = getDerivative(funcStr);
+            if (learningRate <= 0) {
+                alert('Скорость обучения должна быть больше 0');
+                return;
+            }
 
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            drawAxis();
-            plotFunction(f);
+            try {
+                let f, df;
 
-            const result = gradientDescent(f, df, startX, learningRate);
-            drawPath(result.path, f);
+                try {
+                    f = parse(funcStr);
+                } catch (error) {
+                    console.log(error);
+                    alert('Возникла ошибка при парсинге функции');
+                    return;
+                }
 
-            const resultDiv = document.getElementById('result');
-            resultDiv.innerHTML = `
-                <strong>Результаты:</strong><br>
-                Найденный минимум в точке x = ${result.finalX.toFixed(6)}<br>
-                Значение функции в минимуме = ${f(result.finalX).toFixed(6)}<br>
-                Количество итераций: ${result.iterations}
-                ${result.reachedMaxIters ? '<br><span style="color: red;">Достигнуто максимальное число итераций!</span>' : ''}
-            `;
+                try {
+                    df = getDerivative(funcStr);
+                } catch (error) {
+                    console.log(error);
+                    alert('Возникла ошибка при вычислении производной функции');
+                    return;
+                }
+
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                drawAxis();
+                plotFunction(f);
+
+                const result = gradientDescent(f, df, startX, learningRate);
+                drawPath(result.path, f);
+
+                const resultDiv = document.getElementById('result');
+                resultDiv.innerHTML = `
+                    <strong>Результаты:</strong><br>
+                    Найденный минимум в точке x = ${result.finalX.toFixed(6)}<br>
+                    Значение функции в минимуме = ${f(result.finalX).toFixed(6)}<br>
+                    Число итераций: ${result.iterations}
+                    ${result.reachedMaxIters ? '<br><span style="color: red;">Достигнуто максимальное число итераций!</span>' : ''}
+                `;
+            } catch (error) {
+                alert('Произошла ошибка: ' + error.message);
+                const resultDiv = document.getElementById('result');
+                resultDiv.innerHTML = '';
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                drawAxis();
+            }
         }
 
         function resetParameters() {
@@ -327,6 +355,14 @@
             }
         });
         drawAxis();
+
+        document.getElementById('learning-rate').addEventListener('change', function() {
+            const learningRate = parseFloat(this.value);
+            if (learningRate <= 0) {
+                alert('Скорость обучения должна быть больше 0');
+                this.value = '0.1';
+            }
+        });
     </script>
 </body>
 

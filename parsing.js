@@ -20,8 +20,7 @@ function parse(expression) {
             }
         };
     } catch (error) {
-        console.error('Ошибка парсинга выражения:', error);
-        return function() { return NaN; };
+        throw new Error('Ошибка компиляции выражения');
     }
 }
 
@@ -48,7 +47,6 @@ function getDerivative(expression) {
             }
         };
     } catch (error) {
-        console.error('Ошибка вычисления производной:', error);
-        return function() { return NaN; };
+        throw new Error('Ошибка вычисления производной');
     }
 }
