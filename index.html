@@ -53,6 +53,17 @@
         button:hover {
             opacity: 0.9;
         }
+        
+        select {
+            padding: 5px;
+            margin-right: 15px;
+        }
+        
+        #epsilon,
+        #max-iterations {
+            width: 100px;
+            margin-right: 15px;
+        }
     </style>
 </head>
 
@@ -60,7 +71,7 @@
     <div class="container">
         <div class="input-group">
             <label for="function">Функция f(x):</label>
-            <input type="text" id="function" placeholder="Например: x^2">
+            <input type="text" id="function" value="0.1x^2 + sin(x)" placeholder="Например: x^2">
         </div>
         <div class="input-group">
             <label for="x-min">X min:</label>
@@ -80,7 +91,20 @@
         </div>
         <div class="input-group">
             <label for="start-x">Начальная точка x:</label>
-            <input type="number" id="start-x" value="2">
+            <input type="number" id="start-x" value="-6">
+        </div>
+        <div class="input-group">
+            <label for="stop-criterion">Критерий остановки:</label>
+            <select id="stop-criterion">
+                <option value="points">Разница между точками < ε</option>
+                <option value="function">Разница между значениями функции < ε</option>
+            </select>
+            <label for="epsilon" id="epsilon-label">ε:</label>
+            <input type="number" id="epsilon" value="0.0001" step="0.0001">
+        </div>
+        <div class="input-group">
+            <label for="max-iterations">Максимальное число итераций:</label>
+            <input type="number" id="max-iterations" value="100" min="1">
         </div>
         <div class="input-group">
             <button onclick="startGradientDescent()">Запустить</button>
@@ -180,23 +204,41 @@
             ctx.stroke();
         }
 
-        function gradientDescent(f, df, startX, learningRate, maxIters = 100) {
+        function gradientDescent(f, df, startX, learningRate) {
             let x = startX;
             const path = [x];
             let iterations = 0;
 
-            for (let i = 0; i < maxIters; i++) {
+            const stopCriterion = document.getElementById('stop-criterion').value;
+            const epsilon = parseFloat(document.getElementById('epsilon').value);
+            const maxIters = parseInt(document.getElementById('max-iterations').value);
+
+            let prevX = x;
+            let prevFx = f(x);
+
+            while (iterations < maxIters) {
                 iterations++;
                 const gradient = df(x);
-                if (Math.abs(gradient) < 0.0001) break;
 
                 x = x - learningRate * gradient;
+                const fx = f(x);
+
+                if (stopCriterion === 'points') {
+                    if (Math.abs(x - prevX) < epsilon) break;
+                } else if (stopCriterion === 'function') {
+                    if (Math.abs(fx - prevFx) < epsilon) break;
+                }
+
                 path.push(x);
+                prevX = x;
+                prevFx = fx;
             }
+
             return {
                 path,
                 finalX: x,
-                iterations
+                iterations,
+                reachedMaxIters: iterations >= maxIters
             };
         }
 
@@ -253,6 +295,7 @@
                 Найденный минимум в точке x = ${result.finalX.toFixed(6)}<br>
                 Значение функции в минимуме = ${f(result.finalX).toFixed(6)}<br>
                 Количество итераций: ${result.iterations}
+                ${result.reachedMaxIters ? '<br><span style="color: red;">Достигнуто максимальное число итераций!</span>' : ''}
             `;
         }
 
@@ -262,7 +305,11 @@
             document.getElementById('y-min').value = '-5';
             document.getElementById('y-max').value = '5';
             document.getElementById('learning-rate').value = '0.1';
-            document.getElementById('start-x').value = '2';
+            document.getElementById('start-x').value = '-6';
+            document.getElementById('function').value = '0.1x^2 + sin(x)';
+            document.getElementById('epsilon').value = '0.0001';
+            document.getElementById('max-iterations').value = '100';
+            document.getElementById('stop-criterion').value = 'points';
             document.getElementById('result').innerHTML = '';
 
             const funcStr = document.getElementById('function').value;
