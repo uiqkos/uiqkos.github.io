@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Визуализатор градиентного спуска</title>
+    <style>
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .input-group {
+            margin-bottom: 15px;
+        }
+        
+        canvas {
+            border: 1px solid #ccc;
+            margin-top: 20px;
+        }
+        
+        .result {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border-radius: 5px;
+        }
+        
+        input[type="number"] {
+            width: 80px;
+            margin-right: 15px;
+        }
+        
+        button {
+            padding: 8px 16px;
+            margin-right: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        button:first-child {
+            background-color: #4CAF50;
+            color: white;
+        }
+        
+        .reset-button {
+            background-color: #f0f0f0;
+            color: #333;
+        }
+        
+        button:hover {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="input-group">
+            <label for="function">Функция f(x):</label>
+            <input type="text" id="function" placeholder="Например: x^2">
+        </div>
+        <div class="input-group">
+            <label for="x-min">X min:</label>
+            <input type="number" id="x-min" value="-7" step="1">
+            <label for="x-max">X max:</label>
+            <input type="number" id="x-max" value="7" step="1">
+        </div>
+        <div class="input-group">
+            <label for="y-min">Y min:</label>
+            <input type="number" id="y-min" value="-5" step="1">
+            <label for="y-max">Y max:</label>
+            <input type="number" id="y-max" value="5" step="1">
+        </div>
+        <div class="input-group">
+            <label for="learning-rate">Скорость обучения:</label>
+            <input type="number" id="learning-rate" value="0.1" step="0.01">
+        </div>
+        <div class="input-group">
+            <label for="start-x">Начальная точка x:</label>
+            <input type="number" id="start-x" value="2">
+        </div>
+        <div class="input-group">
+            <button onclick="startGradientDescent()">Запустить</button>
+            <button onclick="resetParameters()" class="reset-button">Сбросить параметры</button>
+        </div>
+        <div id="result" class="result"></div>
+        <canvas id="graph" width="700" height="400"></canvas>
+    </div>
+
+    <script src="mathjs.min.js"></script>
+    <script src="parsing.js"></script>
+    <script>
+        const canvas = document.getElementById('graph');
+        const ctx = canvas.getContext('2d');
+
+        const SCALE = 50;
+        const X_OFFSET = canvas.width / 2;
+        const Y_OFFSET = canvas.height / 2;
+
+        function drawAxis() {
+            const xMin = parseFloat(document.getElementById('x-min').value);
+            const xMax = parseFloat(document.getElementById('x-max').value);
+            const yMin = parseFloat(document.getElementById('y-min').value);
+            const yMax = parseFloat(document.getElementById('y-max').value);
+
+            const xScale = canvas.width / (xMax - xMin);
+            const yScale = canvas.height / (yMax - yMin);
+
+            ctx.beginPath();
+            ctx.strokeStyle = '#000';
+
+
+            const xZero = -xMin * xScale;
+            if (xZero >= 0 && xZero <= canvas.width) {
+                ctx.moveTo(xZero, 0);
+                ctx.lineTo(xZero, canvas.height);
+
+
+                ctx.textAlign = 'right';
+                ctx.textBaseline = 'middle';
+                const step = Math.ceil((yMax - yMin) / 10);
+                for (let y = Math.ceil(yMin / step) * step; y <= yMax; y += step) {
+                    const py = canvas.height - ((y - yMin) * yScale);
+
+                    ctx.moveTo(xZero - 5, py);
+                    ctx.lineTo(xZero + 5, py);
+
+                    ctx.fillText(y.toString(), xZero - 8, py);
+                }
+            }
+
+
+            const yZero = canvas.height + yMin * yScale;
+            if (yZero >= 0 && yZero <= canvas.height) {
+                ctx.moveTo(0, yZero);
+                ctx.lineTo(canvas.width, yZero);
+
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'top';
+                const step = Math.ceil((xMax - xMin) / 10);
+                for (let x = Math.ceil(xMin / step) * step; x <= xMax; x += step) {
+                    const px = (x - xMin) * xScale;
+
+                    ctx.moveTo(px, yZero - 5);
+                    ctx.lineTo(px, yZero + 5);
+
+                    ctx.fillText(x.toString(), px, yZero + 8);
+                }
+            }
+
+            ctx.stroke();
+        }
+
+        function plotFunction(func) {
+            ctx.beginPath();
+            ctx.strokeStyle = 'blue';
+
+            const xMin = parseFloat(document.getElementById('x-min').value);
+            const xMax = parseFloat(document.getElementById('x-max').value);
+            const yMin = parseFloat(document.getElementById('y-min').value);
+            const yMax = parseFloat(document.getElementById('y-max').value);
+
+            const xScale = canvas.width / (xMax - xMin);
+            const yScale = canvas.height / (yMax - yMin);
+
+            for (let px = 0; px < canvas.width; px++) {
+                const x = xMin + (px / xScale);
+                const y = func(x);
+                const py = canvas.height - ((y - yMin) * yScale);
+
+                if (px === 0) {
+                    ctx.moveTo(px, py);
+                } else {
+                    ctx.lineTo(px, py);
+                }
+            }
+            ctx.stroke();
+        }
+
+        function gradientDescent(f, df, startX, learningRate, maxIters = 100) {
+            let x = startX;
+            const path = [x];
+            let iterations = 0;
+
+            for (let i = 0; i < maxIters; i++) {
+                iterations++;
+                const gradient = df(x);
+                if (Math.abs(gradient) < 0.0001) break;
+
+                x = x - learningRate * gradient;
+                path.push(x);
+            }
+            return {
+                path,
+                finalX: x,
+                iterations
+            };
+        }
+
+        function drawPath(path, f) {
+            const xMin = parseFloat(document.getElementById('x-min').value);
+            const xMax = parseFloat(document.getElementById('x-max').value);
+            const yMin = parseFloat(document.getElementById('y-min').value);
+            const yMax = parseFloat(document.getElementById('y-max').value);
+
+            const xScale = canvas.width / (xMax - xMin);
+            const yScale = canvas.height / (yMax - yMin);
+
+            ctx.beginPath();
+            ctx.strokeStyle = 'red';
+
+            for (let i = 0; i < path.length; i++) {
+                const x = path[i];
+                const y = f(x);
+                const px = (x - xMin) * xScale;
+                const py = canvas.height - ((y - yMin) * yScale);
+
+                if (i === 0) {
+                    ctx.moveTo(px, py);
+                } else {
+                    ctx.lineTo(px, py);
+                }
+
+                ctx.fillStyle = 'red';
+                ctx.beginPath();
+                ctx.arc(px, py, 3, 0, 2 * Math.PI);
+                ctx.fill();
+            }
+            ctx.stroke();
+        }
+
+        function startGradientDescent() {
+            const funcStr = document.getElementById('function').value;
+            const learningRate = parseFloat(document.getElementById('learning-rate').value);
+            const startX = parseFloat(document.getElementById('start-x').value);
+
+            const f = parse(funcStr);
+            const df = getDerivative(funcStr);
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawAxis();
+            plotFunction(f);
+
+            const result = gradientDescent(f, df, startX, learningRate);
+            drawPath(result.path, f);
+
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `
+                <strong>Результаты:</strong><br>
+                Найденный минимум в точке x = ${result.finalX.toFixed(6)}<br>
+                Значение функции в минимуме = ${f(result.finalX).toFixed(6)}<br>
+                Количество итераций: ${result.iterations}
+            `;
+        }
+
+        function resetParameters() {
+            document.getElementById('x-min').value = '-7';
+            document.getElementById('x-max').value = '7';
+            document.getElementById('y-min').value = '-5';
+            document.getElementById('y-max').value = '5';
+            document.getElementById('learning-rate').value = '0.1';
+            document.getElementById('start-x').value = '2';
+            document.getElementById('result').innerHTML = '';
+
+            const funcStr = document.getElementById('function').value;
+            if (funcStr) {
+                startGradientDescent();
+            } else {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                drawAxis();
+            }
+        }
+        document.getElementById('function').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                startGradientDescent();
+            }
+        });
+        drawAxis();
+    </script>
+</body>
+
+</html>
